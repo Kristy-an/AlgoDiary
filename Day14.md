@@ -42,7 +42,7 @@ Recursively get the maxDepth of current node' sub-trees. Pick the bigger depth a
 
 Recall the depth and height of a tree, depth count from top(root) to bottom(leaf), height count from bottom to top. 
 
-![image-20240912001014862](/Users/a/Library/Application Support/typora-user-images/image-20240912001014862.png)
+![](./img/tree_heightanddepth.jpg)
 
 Root node has depth of 0, but it's height is the max depth of the whole tree. Therefore, we are also solving the height of root. 
 
