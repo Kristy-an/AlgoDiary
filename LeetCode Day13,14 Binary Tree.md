@@ -1,4 +1,4 @@
-# LeetCode Day13,14 Binary Tree
+# LeetCode Day13,14 Binary Tree Basic
 
 ## Terminology and Formulas
 
