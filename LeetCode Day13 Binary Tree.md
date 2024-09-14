@@ -1,4 +1,4 @@
-# LeetCode Day13,14 Binary Tree Basic
+# LeetCode Day13 Binary Tree Basic
 
 ## Terminology and Formulas
 
@@ -7,7 +7,7 @@
 - **Height of a node \*n\***: The length of the path from *n* to its deepest descendant. So the height of the tree itself is the height of the root node and the height of leaf nodes is always 0.
 - **Height of a Tree**: Height of its root node
 
-![img](https://cdn-images-1.medium.com/max/800/1*TNPl2If24Qewc-tZpnvdeQ.png)
+![](./img/tree_heightanddepth.jpg)
 
 Summary: Expect Level, other proporties all count from 0.
 
