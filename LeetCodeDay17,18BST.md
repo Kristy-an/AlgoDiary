@@ -178,14 +178,13 @@ class Solution:
         left = self.lowestCommonAncestor(root.left, p, q)
         right = self.lowestCommonAncestor(root.right, p, q)
 
-        if left is not None and right is not None:
+        if left and right:
             return root
-
-        if left is None and right is not None:
-            return right
-        elif left is not None and right is None:
+        elif left and not right:
             return left
-        else: 
+        elif not left and right:
+            return right
+        else:
             return None
 ```
 
