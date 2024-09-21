@@ -164,3 +164,97 @@ class Solution:
         return res 
 ```
 
+
+
+[39. Combination Sum](https://leetcode.com/problems/combination-sum/)
+
+```python
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        sum = 0
+        path = []
+        result = []
+        def backtracing(candidates, target, path, startIndex, sum, result):
+            if sum>target:
+                return
+            if sum == target:
+                result.append(path[:])
+
+            for i in range(startIndex, len(candidates)):
+                sum += candidates[i]
+                path.append(candidates[i])
+                backtracing(candidates, target, path, i, sum, result)
+                sum -= candidates[i]
+                path.pop()
+        backtracing(candidates, target, path, 0, sum, result)
+        return result
+```
+
+
+
+
+
+[40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/)
+
+Compared with [216. Combination Sum III](https://leetcode.com/problems/combination-sum-iii/) and 39. Combination Sum, this problem focus on how to make the list in result unique. 
+
+![lc40](img/lc40.jpg)
+
+The elements in a single list in the result can be repeated, which is on a vertical level. But the list in the final result cannot be repeated, which needs to be handled by level.
+
+Besides, to handle this by level, we need to sort the candidates first to make it convenient.
+
+```python
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        path = []
+        startIndex = 0
+        candidates.sort()
+
+        def backtracking(startIndex):
+            if sum(path)>=target:
+                if sum(path)==target:
+                    res.append(path[:])
+                return
+            for i in range(startIndex, len(candidates)):
+              # Here, handle repeat answer.
+                if i>startIndex and candidates[i]==candidates[i-1]:
+                    continue
+                path.append(candidates[i])
+                backtracking(i+1)
+                path.pop()
+
+        backtracking(0)
+        return res
+```
+
+
+
+[131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/)
+
+```python
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        result = []
+        path = []
+        self.backtracing(s, 0, path, result)
+        return result
+        
+    def backtracing(self, s, startIndex, path, result):
+        if startIndex == len(s):
+            result.append(path[:])
+        
+        for i in range(startIndex, len(s)):
+            if self.isPalindrome((s[startIndex:i+1])):
+                path.append((s[startIndex:i+1]))
+                self.backtracing(s, i+1, path, result)
+                path.pop()
+            
+    def isPalindrome(self, s):
+        for i in range(0, len(s)//2):
+            if s[i] != s[len(s) - i - 1]:
+                return False
+        return True
+```
+
