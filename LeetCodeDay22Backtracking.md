@@ -258,3 +258,37 @@ class Solution:
         return True
 ```
 
+
+
+
+
+
+
+
+[332. Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/)
+
+```python
+from collections import defaultdict
+
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        # Create the graph (adjacency list) and sort destinations lexicographically
+        flight_map = defaultdict(list)
+        for from_, to in sorted(tickets):
+            flight_map[from_].append(to)
+
+        res = []
+
+        def dfs(airport):
+            while flight_map[airport]:
+                # Always get the smallest destination
+                next_airport = flight_map[airport].pop(0)
+                dfs(next_airport)
+            res.append(airport)
+
+        # Start DFS from JFK
+        dfs("JFK")
+        # The result needs to be reversed, since we are constructing the itinerary backwards
+        return res[::-1]
+```
+
