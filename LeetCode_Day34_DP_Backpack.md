@@ -233,3 +233,86 @@ class Solution:
         return dp[target]
 ```
 
+
+
+
+
+### [322. Coin Change](https://leetcode.com/problems/coin-change/)
+
+Target: Min # of items in a combination/permutation 
+
+Therefore it can be either c or p, order of for loops doesn't matter.
+
+```python
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [float('inf')]*(amount+1) 
+
+        # dp[i][j]: # of combin make up amount j with first i coins
+        dp[0] = 0
+        
+        for i in range(len(coins)):
+            for j in range(coins[i], amount+1):
+                dp[j] = min(dp[j], dp[j-coins[i]]+1)
+
+        return dp[amount] if dp[amount] != float('inf') else -1
+```
+
+
+
+
+
+[279. Perfect Squares](https://leetcode.com/problems/perfect-squares/)
+
+Clearly show why it's a same question with the previous one:
+
+```python
+class Solution:
+    def numSquares(self, n: int) -> int:
+        nums = [n*n for n in range(1,n+1)]
+
+        dp = [float('inf')]*(n+1)
+        dp[0] = 0
+
+        for i in range(n):
+            for j in range(nums[i], n+1):
+                dp[j] = min(dp[j], dp[j-nums[i]]+1)
+            print(dp)
+
+        return dp[n] if dp[n] != float('inf') else -1
+```
+
+Clearer Code:
+
+```python
+class Solution:
+    def numSquares(self, n: int) -> int:
+        dp = [float('inf')]*(n+1)
+        dp[0] = 0
+
+        for i in range(1, int(n**0.5)+1):
+            for j in range(i**2, n+1):
+                dp[j] = min(dp[j], dp[j-i**2]+1)
+
+        return dp[n]
+```
+
+
+
+
+
+```python
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp = [False] * (len(s)+1)
+        dp[0] = True
+            
+        for j in range(1,len(s)+1):
+            for word in wordDict:
+                wordLen = len(word)
+                if j >= wordLen and s[j-wordLen:j]==word:
+                    if dp[j-wordLen]==True: dp[j]=True 
+        
+        return dp[len(s)]
+```
+
