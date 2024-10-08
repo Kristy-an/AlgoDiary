@@ -157,3 +157,79 @@ class Solution:
 
 
 
+### [518. Coin Change II](https://leetcode.com/problems/coin-change-ii/)
+
+A complete backpack problem.
+
+Difference is each item can be take infinite times.
+
+For 2-demension array approach, addjust `dp[i][j] = dp[i-1][j] + dp[i-1][j-coins[i]]` to `dp[i][j] = dp[i-1][j] + dp[i][j-coins[i]]`, therefore item `i` can be taken mutiple times.
+
+```python
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [[0]*(amount+1) for _ in range(len(coins))]
+
+        # dp[i][j]: # of combin make up amount j with first i coins
+        for list in dp:
+            list[0] = 1
+        
+        for i in range(len(coins)):
+            for j in range(1, amount+1):
+                if coins[i]>amount: dp[i][j] = dp[i-1][j]
+                else:
+                    dp[i][j] = dp[i-1][j] + dp[i][j-coins[i]]
+
+        return dp[len(coins)-1][amount]
+```
+
+One array Approach:
+
+```python
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [0]*(amount+1) 
+
+        # dp[j]: # of combin make up amount j 
+        dp[0] = 1
+
+        for i in range(len(coins)):
+            for j in range(coins[i], amount+1):
+                dp[j] += dp[j-coins[i]]
+        
+        return dp[amount]
+```
+
+
+
+For solve combinations:
+
+When using 2-demension array, you can switch the order of two `for` loop.
+
+But when using 1-demension, you can't.
+
+For solve max-value:
+
+Can switch the order anyway.
+
+
+
+### [377. Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)
+
+Name is Combination, but actually solve permutation.
+
+Else, same as last question, but switch order of two `for` loop when using 1-demension array to change combination to permutation.
+
+```python
+class Solution:
+    def combinationSum4(self, nums: List[int], target: int) -> int:
+        dp = [0]*(target+1) 
+        dp[0] = 1
+
+        for j in range(target+1):
+            for i in range(len(nums)):
+                if (j - nums[i] >= 0):
+                    dp[j] += dp[j-nums[i]]
+        return dp[target]
+```
+
