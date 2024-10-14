@@ -69,7 +69,7 @@ class Solution:
 
 ### [718. Maximum Length of Repeated Subarray](https://leetcode.com/problems/maximum-length-of-repeated-subarray/)
 
-![718.最长重复子数组](https://code-thinking-1253855093.file.myqcloud.com/pics/2021011215282060.jpg)
+<img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021011215282060.jpg" alt="718.最长重复子数组" style="zoom:50%;" />
 
 `dp[i][j]`: max len of repeated subarray of `nums1[:i-1]` and `nums2[:j-1]`. (end with `nums1[i-1]` or `nums2[j-1]`)
 
@@ -88,5 +88,91 @@ class Solution:
                     dp[i][j] = dp[i-1][j-1] + 1
                     res = max(res, dp[i][j])
         return res
+```
+
+
+
+### [1143. Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
+
+<img src="https://code-thinking-1253855093.file.myqcloud.com/pics/20210210150215918.jpg" alt="1143.最长公共子序列1" style="zoom:50%;" />
+
+```python
+class Solution:
+    def longestCommonSubsequence(self, text1: str, text2: str) -> int:
+        dp = [[0]*(len(text2)+1) for _ in range(len(text1)+1)]
+        res = 0
+        for i in range(1, len(text1) + 1):
+            for j in range(1, len(text2) + 1):
+                if text1[i-1]==text2[j-1]:
+                    dp[i][j] = dp[i-1][j-1] + 1
+                else:
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+
+        return dp[len(text1)][len(text2)]
+```
+
+
+
+### [1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines)
+
+Exactly same with the LCS Problem.
+
+
+
+### [53. Maximum Subarray](https://leetcode.com/problems/maximum-subarray)
+
+Have been discussed in Greedy Part. Can also be done by using DP.
+
+```python
+class Solution:
+     def maxSubArray(self, nums: List[int]) -> int:
+        dp = [0]*len(nums)
+        dp[0] = nums[0]
+        res = dp[0]
+        for i in range(1, len(nums)):
+            dp[i] = max(dp[i-1] + nums[i], nums[i])
+            if dp[i] > res:
+                res = dp[i]
+        return res
+        
+```
+
+
+
+### [392. Is Subsequence](https://leetcode.com/problems/is-subsequence)
+
+Approach 1: Two pointers
+
+```python
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        idxs = 0
+        idxt = 0
+
+        while idxs < len(s) and idxt < len(t):
+            if s[idxs] == t[idxt]:
+                idxs += 1
+            idxt += 1
+
+        return idxs == len(s)
+```
+
+Approach 2: DP
+
+<img src="https://code-thinking-1253855093.file.myqcloud.com/pics/2021030317364166.jpg" alt="392.判断子序列2" style="zoom:50%;" />
+
+```python
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        dp = [[0]*(len(t)+1) for _ in range(len(s)+1)]
+
+        for i in range(1, len(s)+1):
+            for j in range(1, len(t)+1):
+                if s[i-1]==t[j-1]:
+                    dp[i][j] = dp[i-1][j-1] + 1
+                else:
+                    dp[i][j] = dp[i][j-1]
+
+        return dp[len(s)][len(t)] == len(s)
 ```
 
