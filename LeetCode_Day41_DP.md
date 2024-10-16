@@ -176,3 +176,107 @@ class Solution:
         return dp[len(s)][len(t)] == len(s)
 ```
 
+
+
+---
+
+
+
+### [115. Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)
+
+
+
+`dp[i][j]`: # of distinct subsequences of `s[:i-1]` which equals `t[:j-1]`
+
+**Recurrence relation:**
+
+`s[i-1] == t[i-1]`: `dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]`
+
+`s[i-1] != t[i-1]`: `dp[i][j] = dp[i - 1][j]`
+
+<img src="/Users/a/Library/Application Support/typora-user-images/image-20241014224536638.png" alt="image-20241014224536638" style="zoom:25%;" />
+
+```python
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        dp = [[0] * (len(t)+1) for _ in range(len(s)+1)]
+        for i in range(len(s)+1):
+            dp[i][0] = 1
+
+        for i in range(1, len(s)+1):
+            for j in range(1, len(t)+1):
+                if s[i-1]==t[j-1]:
+                    dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
+                else:
+                    dp[i][j] = dp[i-1][j]
+
+        return dp[len(s)][len(t)] 
+```
+
+
+
+### [583. Delete Operation for Two Strings](https://leetcode.com/problems/delete-operation-for-two-strings/)
+
+**Recurrence relation:**
+
+- When `word[i-1] == word[j-1]`:
+
+  - `dp[i][j]  = dp[i-1][j-1]`
+
+- When  `word[i-1] != word[j-1]`:
+
+  - Delete `word1[i-1]`, `dp[i-1][j]+1`
+  - Delete `word2[j-1]`, `dp[i][j-1]+1`
+  - Delete  `word1[i-1]` and  `word2[j-1]`, `dp[i - 1][j - 1] + 2`
+
+  Therefore, `dp[i][j] = min({dp[i - 1][j - 1] + 2, dp[i - 1][j] + 1, dp[i][j - 1] + 1})`, 
+
+  can be simplified to `dp[i][j] = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1)`
+
+**Initialization:**
+
+When i is 0 (ie word1 is empty), we need delete j words (length of word2) to achieve the same as word1. Therefore, when i is 0, `dp[0][j]` is equal to j. Vice versa.
+
+```python
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        dp = [[0]* (len(word2)+1) for _ in range(len(word1)+1)]
+
+        for i in range(len(word1)+1):
+            dp[i][0] = i
+        for j in range(len(word2)+1):
+            dp[0][j] = j
+
+        for i in range(1, len(word1)+1):
+            for j in range(1, len(word2)+1):
+                if word1[i-1] == word2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    dp[i][j] = min(dp[i-1][j]+1, dp[i][j-1]+1)
+        return dp[len(word1)][len(word2)]
+```
+
+
+
+### [72. Edit Distance](https://leetcode.com/problems/edit-distance/)
+
+```python
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        dp = [[0]* (len(word2)+1) for _ in range(len(word1)+1)]
+
+        for i in range(len(word1)+1):
+            dp[i][0] = i
+        for j in range(len(word2)+1):
+            dp[0][j] = j
+
+        for i in range(1, len(word1)+1):
+            for j in range(1, len(word2)+1):
+                if word1[i-1] == word2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1
+                    
+        return dp[len(word1)][len(word2)]
+```
+
