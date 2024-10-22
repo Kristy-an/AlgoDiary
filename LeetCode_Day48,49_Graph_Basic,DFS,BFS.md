@@ -66,4 +66,64 @@ def dfs(参数):
 
 ### [98. 所有可达路径](https://kamacoder.com/problempage.php?pid=1170)
 
+```python
+def dfs(graph, x, n, path, result):
+    if x == n:
+        result.append(path.copy())
+        return
+    for i in range(1, n + 1):
+        if graph[x][i] == 1:
+            path.append(i)
+            dfs(graph, i, n, path, result)
+            path.pop()
+
+def main():
+    n, m = map(int, input().split())
+    graph = [[0] * (n + 1) for _ in range(n + 1)]
+
+    for _ in range(m):
+        s, t = map(int, input().split())
+        graph[s][t] = 1
+
+    result = []
+    dfs(graph, 1, n, [1], result)
+
+    if not result:
+        print(-1)
+    else:
+        for path in result:
+            print(' '.join(map(str, path)))
+
+if __name__ == "__main__":
+    main()
+```
+
+
+
 ### [797. All Paths From Source to Target](https://leetcode.com/problems/all-paths-from-source-to-target/)
+
+```python
+class Solution:
+    def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+
+        target = len(graph) - 1
+        results = []
+
+        def backtrack(curr_node, path):
+            # if we reach the target, no need to explore further.
+            if curr_node == target:
+                results.append(list(path))
+                return
+            # explore the neighbor nodes one after another.
+            for next_node in graph[curr_node]:
+                path.append(next_node)
+                backtrack(next_node, path)
+                path.pop()
+                
+        # kick of the backtracking, starting from the source node (0).
+        path = [0]
+        backtrack(0, path)
+
+        return results
+```
+
