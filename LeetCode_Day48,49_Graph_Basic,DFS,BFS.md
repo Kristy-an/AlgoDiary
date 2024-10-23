@@ -127,3 +127,190 @@ class Solution:
         return results
 ```
 
+
+
+
+
+
+
+### [200. Number of Islands](https://leetcode.com/problems/number-of-islands/)
+
+#### Approach1: Using DFS
+
+```python
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        direction = [[0, 1], [1, 0], [0, -1], [-1, 0]] 
+        m = len(grid)
+        n = len(grid[0])
+        visited = [[0] * n for _ in range(m)]
+
+
+        def dfs(grid, visited, x, y):
+            for i, j in direction:
+                next_x = x + i
+                next_y = y + j
+            
+                if next_x < 0 or next_x >= len(grid) or next_y < 0 or next_y >= len(grid[0]):
+                    continue
+                # 未访问的陆地，标记并调用深度优先搜索
+                if not visited[next_x][next_y] and grid[next_x][next_y] == "1":
+                    visited[next_x][next_y] = True
+                    dfs(grid, visited, next_x, next_y)
+
+        res = 0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == "1" and not visited[i][j]:
+                    res += 1
+                    visited[i][j] = 1
+                    dfs(grid, visited, i, j)
+
+        return res
+```
+
+
+
+Improvement: If find a "1", count, then using DFS to change all nearby "1" to "0". 
+
+But for this way, we changed the original `grid`, while the previous approach keep the `grid` unchanged.
+
+```python
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        direction = [[0, 1], [1, 0], [0, -1], [-1, 0]] 
+        m = len(grid)
+        n = len(grid[0])
+        res = 0
+
+        def dfs(x, y):
+            if not 0 <= x < m or not 0 <= y < n or grid[x][y] == "0":
+                return
+            
+            grid[x][y] = "0"
+            for i, j in direction:
+                dfs(x+i, y+j)
+            
+        for x in range(m):
+            for y in range(n):
+                if grid[x][y] == '1':
+                    dfs(x, y)
+                    res += 1
+        return res
+```
+
+
+
+#### Approach 2: BFS
+
+```python
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        direction = [[0, 1], [1, 0], [0, -1], [-1, 0]] 
+        m = len(grid)
+        n = len(grid[0])
+        visited = [[0] * n for _ in range(m)]
+        res = 0
+
+        def bfs(x,y):
+            que = deque([])
+            que.append([x,y])
+
+            while que:
+                cur_x, cur_y = que.popleft()
+                for i, j in direction:
+                    if 0<=cur_x+i<len(grid) and 0<=cur_y+j<len(grid[0]):
+                        if not visited[cur_x+i][cur_y+j] and grid[cur_x+i][cur_y+j]=="1":
+                            visited[cur_x+i][cur_y+j] = 1
+                            que.append([cur_x+i, cur_y+j])
+        
+        for x in range(m):
+            for y in range(n):
+                if grid[x][y] == "1" and not visited[x][y]:
+                    visited[x][y] = 1
+                    res += 1
+                    bfs(x,y)
+        return res
+```
+
+
+
+Same, we improve simplicity by changing all "1" to "0":
+
+```python
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        direction = [[0, 1], [1, 0], [0, -1], [-1, 0]] 
+        m = len(grid)
+        n = len(grid[0])
+
+        def bfs(x,y):
+            que = deque([])
+            que.append([x,y])
+
+            while que:
+                cur_x, cur_y = que.popleft()
+
+                for i, j in direction:
+                    next_x = cur_x + i
+                    next_y = cur_y + j
+                    
+                    if 0<=next_x<m and 0<=next_y<n:
+                        if grid[next_x][next_y] == "1":
+                            grid[next_x][next_y] = "0"
+                            que.append([next_x, next_y])
+        
+        res = 0
+        for x in range(m):
+            for y in range(n):
+                if grid[x][y] == "1":
+                    res += 1
+                    bfs(x,y)
+
+        return res
+```
+
+
+
+#### [695. Max Area of Island](https://leetcode.com/problems/max-area-of-island/)
+
+Using the same template as last question, just adding a area calculating logic.
+
+BFS:
+
+```python
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        
+        direction = [[0, 1], [1, 0], [0, -1], [-1, 0]] 
+        m = len(grid)
+        n = len(grid[0])
+        visited = [[0] * n for _ in range(m)]
+        res = 0
+
+        def bfs(x,y):
+            que = deque([])
+            que.append([x,y])
+            area = 0
+
+            while que:
+                cur_x, cur_y = que.popleft()
+                print(cur_x, cur_y)
+                area += 1
+                for i, j in direction:
+                    if 0<=cur_x+i<len(grid) and 0<=cur_y+j<len(grid[0]):
+                        if not visited[cur_x+i][cur_y+j] and grid[cur_x+i][cur_y+j]==1:
+                            visited[cur_x+i][cur_y+j] = 1
+                            que.append([cur_x+i, cur_y+j])
+            return area
+        
+        res = 0
+        for x in range(m):
+            for y in range(n):
+                if grid[x][y] == 1 and not visited[x][y]:
+                    visited[x][y] = 1
+                    res = max(res, bfs(x,y))
+                    print("res:", res)
+        return res
+```
+
