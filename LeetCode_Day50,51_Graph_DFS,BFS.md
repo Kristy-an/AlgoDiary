@@ -1,6 +1,10 @@
 # LeetCode Day 50,51 Graph
 
-[TOC]
+
+
+[Problem1](#卡码网：101. 孤岛的总面积)
+
+[problem2](#103. 水流问题)
 
 ### [卡码网：101. 孤岛的总面积](https://kamacoder.com/problempage.php?pid=1173)
 
