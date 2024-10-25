@@ -2,11 +2,31 @@
 
 
 
-[Problem1](#problem1)
+### Catalog:
 
-[problem2](#problem3)
+Changing "island" to "water" or vice
 
-### [卡码网：101. 孤岛的总面积](https://kamacoder.com/problempage.php?pid=1173)  <a name="problem1"></a>
+- [Karmar101.The total area of isolated islands](#problem1)
+
+- [Kamar102.Sink isolated islands](#problem2)
+
+Great tricks to optimize from brute=-force
+
+- [417. Pacific Atlantic Water Flow](#problem3)
+
+- [827. Making A Large Island](#problem4)
+
+Applying graph
+
+- [127. Word Ladder](#problem5)
+
+Other
+
+- [463. Island Perimeter](#problem5)
+
+
+
+### [卡码网：101. 孤岛的总面积](https://kamacoder.com/problempage.php?pid=1173)  The total area of the island<a name="problem1"></a>
 
 **Problem Summary:** Calculating the area of all islands that not touch the edges of the matrixs.
 
@@ -64,7 +84,7 @@ if __name__ == "__main__":
 
 
 
-### [102. 沉没孤岛](https://kamacoder.com/problempage.php?pid=1174)
+### [102. 沉没孤岛](https://kamacoder.com/problempage.php?pid=1174)<a name="problem2"></a>
 
 Paird with Problem 101 and opposite to it. In 101 change all islands on edges to water, in 102, we change all isolated islands to water. 
 
@@ -123,14 +143,33 @@ class Solution:
 
 
 
-### [827. Making A Large Island](https://leetcode.com/problems/making-a-large-island/) /[104. 建造最大岛屿](https://kamacoder.com/problempage.php?pid=1176)
+### [827. Making A Large Island](https://leetcode.com/problems/making-a-large-island/) /[104. 建造最大岛屿](https://kamacoder.com/problempage.php?pid=1176) <a name="problem4"></a>
 
 
 
 
 
-### [127. Word Ladder](https://leetcode.com/problems/word-ladder/)
+### [127. Word Ladder](https://leetcode.com/problems/word-ladder/) <a name="problem5"></a>
 
 
 
-### [463. Island Perimeter](https://leetcode.com/problems/island-perimeter/)
+### [463. Island Perimeter](https://leetcode.com/problems/island-perimeter/) <a name="problem6"></a>
+
+```python
+class Solution:
+    def islandPerimeter(self, grid: List[List[int]]) -> int:
+        res = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if grid[i][j] == 1:
+                    if i == 0 or grid[i-1][j]==0:
+                        res += 1
+                    if i == len(grid) - 1 or grid[i+1][j]==0:
+                        res += 1
+                    if j == 0 or grid[i][j-1] == 0:
+                        res += 1
+                    if j == len(grid[i]) - 1 or grid[i][j+1]==0:
+                        res += 1
+        return res
+```
+
