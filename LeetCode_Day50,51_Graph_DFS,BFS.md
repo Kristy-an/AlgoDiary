@@ -2,11 +2,11 @@
 
 
 
-[Problem1](#卡码网：101. 孤岛的总面积)
+[Problem1](#problem1)
 
-[problem2](#103. 水流问题)
+[problem2](#problem3)
 
-### [卡码网：101. 孤岛的总面积](https://kamacoder.com/problempage.php?pid=1173)
+### [卡码网：101. 孤岛的总面积](https://kamacoder.com/problempage.php?pid=1173)  <a name="problem1"></a>
 
 **Problem Summary:** Calculating the area of all islands that not touch the edges of the matrixs.
 
@@ -72,7 +72,7 @@ We can also first search islands on edges, lable them (like change 1 to 2). Then
 
 
 
-### [103. 水流问题](https://kamacoder.com/problempage.php?pid=1175) / [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow)
+### [103. 水流问题](https://kamacoder.com/problempage.php?pid=1175) / [417. Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow) <a name="problem3"></a>
 
 With **broute-force**, we iterate through each point of the grid, using dfs/bfs to lable all the accessible points, then determine whether these points reach two borders. However, the time complexity will be O(m<sup>2</sup>n<sup>2</sup>).
 
