@@ -75,3 +75,16 @@ The `find()` method is almost the same as the `index()` method, the only differe
 | *value*   | Required. The value to search for                            |
 | *start*   | Optional. Where to start the search. Default is 0            |
 | *end*     | Optional. Where to end the search. Default is to the end of the string |
+
+
+
+
+
+
+
+```python
+for c in items:
+  c = 0
+```
+
+The reason `c` doesn't change the original list is because you are modifying the loop variable `c`, not the elements of the list `s_list`. In Python, when you iterate over a list, `c` becomes a new variable pointing to the current element, not the element in the list itself. Modifying `c` does not affect the original list.
